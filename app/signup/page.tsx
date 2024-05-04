@@ -31,7 +31,7 @@ export default function SignUp({
 
     if (error) {
       console.log(error);
-      // return redirect("/login?message=Could not authenticate user");
+      return redirect("/login?message=Could not authenticate user");
     }
 
     return redirect(
