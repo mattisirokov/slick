@@ -46,6 +46,7 @@ export default function SeletTimeModal({
           Book now
         </div>
       </AlertDialogTrigger>
+
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>

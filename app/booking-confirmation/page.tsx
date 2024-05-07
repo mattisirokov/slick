@@ -1,10 +1,12 @@
+import { redirect } from "next/navigation";
+
 import { getShopById } from "@/server/repair-shops/actions";
 import { getUser } from "@/server/user-authentication/actions";
 import { getShopServiceById } from "@/server/shop-services/actions";
 import { makeBooking } from "@/server/bookings/actions";
 import {
-  getUserVehicles,
-  getVehicleById,
+  getCustomerVehicles,
+  getCustomerVehicleById,
 } from "@/server/customer-vehicles/actions";
 
 import { Button } from "@/components/ui/button";
@@ -26,10 +28,16 @@ export default async function BookingConfirmation({
   const user = await getUser();
   const slot = searchParams.slot.slice(0, 23);
   const service = await getShopServiceById(searchParams.service);
-  const userVehicles = await getUserVehicles(user.user_id);
+
+  if (user == null) {
+    return redirect("/login");
+  }
+
+  const userVehicles = await getCustomerVehicles(user.user_id);
   const selectedVehicleId = searchParams.vehicle;
 
-  const selectedVehicleDetails = await getVehicleById(selectedVehicleId);
+  const selectedVehicleDetails =
+    await getCustomerVehicleById(selectedVehicleId);
 
   const createNewBooking = async (formData: FormData) => {
     "use server";

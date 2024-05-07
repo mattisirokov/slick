@@ -11,6 +11,8 @@ export interface RepairShop {
   city: string;
   status: string;
   banner_img_url: string;
+  booking_buffer: number;
+  days_in_calendar: number;
 }
 
 export interface UserProfile {
@@ -40,7 +42,8 @@ export interface Booking {
   booking_end_date: string;
   price: number;
   status: string;
-  vehicle_id?: number;
+  vehicle_id: number;
+  customer_notes: string;
 }
 
 export interface BookingWithDetails
@@ -73,4 +76,18 @@ export interface CustomerReview {
 export interface CustomerReviewWithDetails
   extends Omit<CustomerReview, "user_id"> {
   user_id: UserProfile;
+}
+
+export interface Message {
+  id: number;
+  timestamp: string;
+  sent_from: string;
+  message: string;
+}
+
+// visual compoent props, for landing page, etc...
+
+export interface HeroSectionProps {
+  title: string;
+  description: string;
 }
