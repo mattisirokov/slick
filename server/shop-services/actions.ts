@@ -44,8 +44,6 @@ export async function updateShopService(formData: FormData) {
   const duration = formData.get("duration");
   const serviceID = formData.get("service_id");
 
-  console.log("forData", formData);
-
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -115,5 +113,6 @@ export async function addNewService(formData: FormData) {
     throw new Error(error.message);
   }
 
+  console.log("new service added: ", data);
   return data;
 }
