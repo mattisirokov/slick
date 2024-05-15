@@ -1,63 +1,36 @@
-"use client";
-
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
-
 import { getUserProfileByID } from "@/server/user-profiles/actions";
-import { Conversation, Message, UserProfile } from "@/types";
+
 import ConversationItem from "./ConversationItem";
-import getConversationHeader from "@/utils/messaging/message-utils";
-import { userAgent } from "next/server";
+
+import { Conversation } from "@/types";
 
 interface UserConversationProps {
-  conversations: Conversation[] | null;
+  conversations: Conversation[];
   currentUserID: string;
 }
 
-export default function UserConversations({
+export default async function UserConversations({
   conversations,
   currentUserID,
 }: UserConversationProps) {
-  const router = useRouter();
-  const { replace } = useRouter();
-
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-
-  const changes = createClient()
-    .channel("messages")
-    .on(
-      "postgres_changes",
-      {
-        schema: "public",
-        event: "*",
-        table: "Messages",
-      },
-      (payload) => {
-        router.refresh();
-      },
-    )
-    .subscribe();
-
-  const handleConversatioClick = (conversationID: number) => () => {
-    const params = new URLSearchParams(searchParams);
-    params.set("conversation_id", conversationID.toString());
-    replace(`${pathname}?${params.toString()}`);
+  const getConversationPartner = (conversation: Conversation) => {
+    if (conversation.sender.user_id.toString() === currentUserID) {
+      return getUserProfileByID(conversation.receiver.user_id);
+    } else {
+      return getUserProfileByID(conversation.sender.user_id);
+    }
   };
 
   return (
-    <div className={"flex flex-col gap-2"}>
-      <h2>User conversations:</h2>
-      {conversations?.map((conversation, index) => (
-        <div
-          key={index}
-          onClick={handleConversatioClick(conversation.id)}
-          className={"border-2 p-4"}
-        >
-          <h3>{getConversationHeader(conversation, currentUserID)}</h3>
-          <p>{conversation.last_message_id.message}</p>
+    <>
+      {conversations.map((conversation, index) => (
+        <div key={index}>
+          <ConversationItem
+            conversation={conversation}
+            conversationPartner={getConversationPartner(conversation)}
+          />
         </div>
       ))}
-    </div>
+    </>
   );
 }
