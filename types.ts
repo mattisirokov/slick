@@ -80,11 +80,16 @@ export interface CustomerReviewWithDetails
 
 export interface Message {
   id: number;
-  timestamp: string;
-  sender: string;
-  receiver: string;
+  created_at: string;
+  sender: UserProfile;
+  receiver: UserProfile;
   message: string;
   conversation_id: number;
+}
+
+export interface MessageSender {
+  userProfile: UserProfile;
+  type: "currentUser" | "otherUser";
 }
 
 export interface Conversation {

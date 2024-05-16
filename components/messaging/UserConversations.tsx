@@ -22,7 +22,7 @@ export default async function UserConversations({
   };
 
   return (
-    <>
+    <div className={"flex flex-col gap-2"}>
       {conversations.map((conversation, index) => (
         <div key={index}>
           <ConversationItem
@@ -31,6 +31,6 @@ export default async function UserConversations({
           />
         </div>
       ))}
-    </>
+    </div>
   );
 }

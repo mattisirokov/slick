@@ -1,38 +1,62 @@
+"use client";
+
 import { sendMessage } from "@/server/messaging/actions";
+
 import { Button } from "../ui/button";
+import { SendIcon } from "lucide-react";
+
 import { Conversation } from "@/types";
+import { useRef } from "react";
 
 interface SendMessageProps {
-  sender: string;
+  currentUserID: string;
   selectedConversation: Conversation | null;
 }
-export default async function SendMessage({
+export default function SendMessage({
   selectedConversation,
-  sender,
+  currentUserID,
 }: SendMessageProps) {
-  const receiver = selectedConversation?.receiver;
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const sendUserMessage = async (formData: FormData) => {
-    "use server";
-    await sendMessage(
-      formData,
-      sender,
-      receiver?.user_id,
-      selectedConversation?.id,
-    );
+  const getMessageReciever = (
+    selectedConversation: Conversation | null,
+  ): string | null => {
+    if (!selectedConversation) {
+      return null;
+    }
+
+    if (selectedConversation.sender.user_id.toString() === currentUserID) {
+      return selectedConversation.receiver.user_id;
+    } else {
+      return selectedConversation.sender.user_id;
+    }
   };
 
+  const receiver = getMessageReciever(selectedConversation);
+
   return (
-    <form className={"flex flex-col justify-start border-2 p-12"}>
-      <label htmlFor={"message"}>Message</label>
-      <input
-        type="text"
+    <form
+      className={"mb-8 flex w-full flex-row items-end justify-start gap-4"}
+      ref={formRef}
+      action={async (formData) => {
+        await sendMessage(
+          formData,
+          currentUserID,
+          receiver,
+          selectedConversation?.id,
+        );
+
+        formRef.current?.reset();
+      }}
+    >
+      <textarea
         name={"message"}
         title={"message"}
-        className={"mb-4"}
+        placeholder={"Type your message here..."}
+        className={"h-16 w-full rounded-lg border-2 p-4 text-lg"}
       />
-      <Button type="submit" formAction={sendUserMessage}>
-        Send message
+      <Button type="submit" className={"gap-4"}>
+        <SendIcon size={24} /> Send
       </Button>
     </form>
   );

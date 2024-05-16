@@ -11,7 +11,7 @@ export async function getConversationMessages(
   const supabase = createClient();
   const { data, error } = await supabase
     .from("Messages")
-    .select(`*`)
+    .select(`*, receiver(*), sender(*)`)
     .eq("conversation_id", conversationID);
 
   if (error) {
@@ -29,6 +29,11 @@ export async function getConversationMessages(
 export async function getUserConversations(
   userID: string,
 ): Promise<Conversation[] | null> {
+  if (!userID) {
+    console.error("Error: userID is undefined");
+    return null;
+  }
+
   const supabase = createClient();
   const { data, error } = await supabase
     .from("Conversations")
@@ -48,9 +53,14 @@ export async function getUserConversations(
 export async function sendMessage(
   formData: FormData,
   sender: string,
-  receiver: string | undefined,
+  receiver: string | null,
   conversation_id: number | undefined,
 ) {
+  if (!receiver || !conversation_id) {
+    console.error("Error: receiver or conversation_id is null or undefined");
+    return null;
+  }
+
   const message = formData.get("message") as string;
   const supabase = createClient();
   const { data, error } = await supabase
@@ -75,11 +85,14 @@ export async function sendMessage(
   return data;
 }
 
-// get single conversation by ID
-
 export async function getConversationByID(
   conversationID: string,
 ): Promise<Conversation | null> {
+  if (!conversationID) {
+    console.error("Error: conversationID is undefined");
+    return null;
+  }
+
   const supabase = createClient();
   const { data, error } = await supabase
     .from("Conversations")
