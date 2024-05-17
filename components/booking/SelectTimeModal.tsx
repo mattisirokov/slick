@@ -37,10 +37,10 @@ export default function SeletTimeModal({
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
+      <AlertDialogTrigger className={"w-full"}>
         <div
           className={
-            "flex flex-row items-center justify-center rounded-md bg-black p-2 text-white"
+            "flex cursor-pointer flex-row items-center justify-center rounded-md bg-green-400 p-2 text-white transition-all duration-300  ease-in-out hover:bg-black"
           }
         >
           Book now

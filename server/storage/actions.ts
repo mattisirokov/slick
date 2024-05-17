@@ -1,5 +1,7 @@
 "use client";
 
+import { revalidatePath } from "next/cache";
+
 import { toast } from "sonner";
 import { createClient } from "@/utils/supabase/client";
 

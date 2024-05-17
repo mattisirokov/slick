@@ -19,11 +19,12 @@ interface AddNewServiceModalProps {
   shopId: number;
 }
 
-export function AddNewServiceModal({ shopId }: AddNewServiceModalProps) {
+export async function AddNewServiceModal({ shopId }: AddNewServiceModalProps) {
   const handleAddService = async (formData: FormData) => {
     "use server";
-    addNewService(formData);
+    await addNewService(formData);
   };
+
   return (
     <Dialog>
       <DialogTrigger asChild>

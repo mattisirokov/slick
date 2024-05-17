@@ -18,14 +18,12 @@ export default async function CustomerVehicles() {
   const customerVehicles = await getCustomerVehicles(user.user_id);
 
   return (
-    <>
-      <div className={"w-full rounded-md bg-white p-6"}>
-        <div className={"flex w-full flex-row items-start justify-between"}>
-          <p className={"mb-6 text-3xl font-bold"}>Vehicles</p>
-          <AddNewVehicleModal customerId={user.user_id} />
-        </div>
-        <VehiclesTable vehicles={customerVehicles} />
+    <div className={"w-full rounded-md bg-white p-6"}>
+      <div className={"flex w-full flex-row items-start justify-between"}>
+        <p className={"mb-6 text-3xl font-bold"}>Vehicles</p>
+        <AddNewVehicleModal customerId={user.user_id} />
       </div>
-    </>
+      <VehiclesTable vehicles={customerVehicles} />
+    </div>
   );
 }

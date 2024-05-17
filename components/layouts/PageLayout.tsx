@@ -12,7 +12,7 @@ export default async function PageLayout({ children }: PageLayoutProps) {
       <Navigation
         links={[
           { title: "Home", url: "/" },
-          { title: "About", url: "/" },
+          { title: "Browse shops", url: "/browse" },
           { title: "Contact", url: "/" },
         ]}
         buttons={[

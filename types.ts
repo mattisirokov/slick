@@ -31,6 +31,7 @@ export interface ShopService {
   shop_id: number;
   duration: number;
   price: number;
+  description: string;
 }
 
 export interface Booking {

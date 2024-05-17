@@ -9,9 +9,7 @@ import {
 } from "@/components/ui/table";
 import { CustomerVehicle } from "@/types";
 import UpdateVehicleModal from "./UpdateVehicleModal";
-import UpdateVehicleForm from "./UpdateVehicleForm";
 import DeleteVehicleModal from "./DeleteVehicleModal";
-import DeleteVehicle from "./DeleteVehicle";
 
 type VehiclesTableProps = {
   vehicles: CustomerVehicle[];

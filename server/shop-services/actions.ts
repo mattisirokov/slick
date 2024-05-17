@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { createClient } from "@/utils/supabase/client";
 import { ShopService } from "@/types";
 
@@ -59,6 +61,7 @@ export async function updateShopService(formData: FormData) {
     throw new Error(error.message);
   }
 
+  revalidatePath("/shop-settings");
   return data;
 }
 
@@ -75,6 +78,7 @@ export async function deleteShopService(formData: FormData) {
     throw new Error(error.message);
   }
 
+  revalidatePath("/shop-settings");
   return data;
 }
 
@@ -113,6 +117,6 @@ export async function addNewService(formData: FormData) {
     throw new Error(error.message);
   }
 
-  console.log("new service added: ", data);
+  revalidatePath("/shop-settings");
   return data;
 }
