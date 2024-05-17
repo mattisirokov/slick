@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { FormDataType } from "@/components/customer-dashboard/AddNewVehicleForm";
 import { CustomerVehicle } from "@/types";
 import { createClient } from "@/utils/supabase/client";
@@ -39,42 +41,48 @@ export async function getCustomerVehicleById(
   return data;
 }
 
-export async function addNewVehicle(formData: FormDataType, customerId: string) {
-  const make = formData.make
-  const model = formData.model
-  const yearManufactured = formData.yearManufactured
-  const registrationNumber = formData.registrationNumber
-  const description = formData.description
-  
-  const supabase = createClient()
+export async function addNewVehicle(
+  formData: FormDataType,
+  customerId: string,
+) {
+  const make = formData.make;
+  const model = formData.model;
+  const yearManufactured = formData.yearManufactured;
+  const registrationNumber = formData.registrationNumber;
+  const description = formData.description;
+
+  const supabase = createClient();
   const { data, error } = await supabase
     .from("Customer Vehicles")
-    .insert([{
-      make: make,
-      model: model,
-      year_manufactured: yearManufactured,
-      description: description,
-      registration_number: registrationNumber,
-      associated_user: customerId,
-    },
-  ]);
+    .insert([
+      {
+        make: make,
+        model: model,
+        year_manufactured: yearManufactured,
+        description: description,
+        registration_number: registrationNumber,
+        associated_user: customerId,
+      },
+    ])
+    .select();
 
   if (error) {
     throw new Error(error.message);
   }
 
+  revalidatePath("/customer-vehicles");
+
   return data;
 }
 
-
 export async function updateVehicle(formData: FormDataType, vehicleId: number) {
-  const make = formData.make
-  const model = formData.model
-  const yearManufactured = formData.yearManufactured
-  const registrationNumber = formData.registrationNumber
-  const description = formData.description
-  
-  const supabase = createClient()
+  const make = formData.make;
+  const model = formData.model;
+  const yearManufactured = formData.yearManufactured;
+  const registrationNumber = formData.registrationNumber;
+  const description = formData.description;
+
+  const supabase = createClient();
   const { data, error } = await supabase
     .from("Customer Vehicles")
     .update({
@@ -84,13 +92,16 @@ export async function updateVehicle(formData: FormDataType, vehicleId: number) {
       description: description,
       registration_number: registrationNumber,
     })
-    .eq("id", vehicleId);
+    .eq("id", vehicleId)
+    .select();
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return data
+  revalidatePath("/customer-vehicles");
+
+  return data;
 }
 
 export async function deleteVehicle(vehicleId: number) {
@@ -98,11 +109,14 @@ export async function deleteVehicle(vehicleId: number) {
   const { data, error } = await supabase
     .from("Customer Vehicles")
     .delete()
-    .eq("id", vehicleId);
+    .eq("id", vehicleId)
+    .select();
 
   if (error) {
     throw new Error(error.message);
   }
-  
+
+  revalidatePath("/customer-vehicles");
+
   return data;
 }
