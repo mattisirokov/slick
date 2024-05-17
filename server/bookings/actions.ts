@@ -97,3 +97,19 @@ export async function makeBooking(formData: FormData) {
 
   return redirect("/booking-complete");
 }
+
+export async function updateBookingStatus(
+  bookingID: number,
+  newStatus: string,
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("Bookings")
+    .update({ status: newStatus })
+    .eq("id", bookingID);
+
+  if (error) {
+    console.error("Error updating booking status:", error);
+    throw new Error(error.message);
+  }
+}

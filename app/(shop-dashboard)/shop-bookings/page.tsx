@@ -5,8 +5,7 @@ import {
   getUser,
   getRepairShopAssociatedWithUser,
 } from "@/server/user-authentication/actions";
-
-import { LargeBookingTable } from "@/components/dashboard/LargeBookingTable";
+import DraggableBookingsTable from "@/components/dashboard/DraggableBookingsTable";
 
 export default async function Page() {
   const user = await getUser();
@@ -26,7 +25,7 @@ export default async function Page() {
         <p className={"mb-6 animate-fadeInUp text-3xl  font-bold"}>Bookings</p>
       </div>
       <div className={"h-full w-full animate-fadeInUp "}>
-        <LargeBookingTable bookings={bookings} />
+        <DraggableBookingsTable bookings={bookings} />
       </div>
     </div>
   );
