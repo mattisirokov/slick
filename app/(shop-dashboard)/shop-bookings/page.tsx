@@ -5,6 +5,7 @@ import {
   getUser,
   getRepairShopAssociatedWithUser,
 } from "@/server/user-authentication/actions";
+
 import DraggableBookingsTable from "@/components/dashboard/DraggableBookingsTable";
 
 export default async function Page() {
@@ -19,7 +20,9 @@ export default async function Page() {
 
   return (
     <div
-      className={"flex h-full w-full flex-col items-start justify-start p-12"}
+      className={
+        "flex h-full w-full flex-col items-start justify-start overflow-hidden p-12"
+      }
     >
       <div className={"flex w-full flex-row justify-between"}>
         <p className={"mb-6 animate-fadeInUp text-3xl  font-bold"}>Bookings</p>

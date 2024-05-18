@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 
-function useRealtime() {
+function useRealtimeMessages() {
   const router = useRouter();
 
   const changes = createClient()
@@ -14,7 +13,7 @@ function useRealtime() {
         event: "*",
         table: "Messages",
       },
-      (payload) => {
+      () => {
         router.refresh();
       },
     )
@@ -25,4 +24,27 @@ function useRealtime() {
   };
 }
 
-export default useRealtime;
+function useRealtimeBookings() {
+  const router = useRouter();
+
+  const changes = createClient()
+    .channel("bookings")
+    .on(
+      "postgres_changes",
+      {
+        schema: "public",
+        event: "*",
+        table: "Bookings",
+      },
+      () => {
+        router.refresh();
+      },
+    )
+    .subscribe();
+
+  return () => {
+    changes.unsubscribe();
+  };
+}
+
+export { useRealtimeMessages, useRealtimeBookings };

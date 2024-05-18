@@ -13,7 +13,7 @@ export async function getBookingsForRepairShop(
   const supabase = await createClient();
   const { data: bookings, error: bookingsError } = await supabase
     .from("Bookings")
-    .select(`*, shop_service_id(*), user_id(*)`)
+    .select(`*, shop_service_id(*), user_id(*), vehicle_id(*)`)
     .eq("shop_id", shopID);
 
   if (bookingsError || !bookings) {
@@ -78,7 +78,7 @@ export async function makeBooking(formData: FormData) {
 
   const supabase = await createClient();
 
-  const { data, error } = await supabase.from("Bookings").insert([
+  const { error } = await supabase.from("Bookings").insert([
     {
       shop_service_id: shopServiceID,
       user_id: userID,

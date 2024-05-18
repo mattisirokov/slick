@@ -45,13 +45,19 @@ export interface Booking {
   status: string;
   vehicle_id: number;
   customer_notes: string;
+  shop_notes: string;
+  position_in_column: number;
 }
 
 export interface BookingWithDetails
-  extends Omit<Booking, "shop_service_id" | "shop_id" | "user_id"> {
+  extends Omit<
+    Booking,
+    "shop_service_id" | "shop_id" | "user_id" | "vehicle_id"
+  > {
   shop_service_id: ShopService;
   shop_id: RepairShop;
   user_id: UserProfile;
+  vehicle_id: CustomerVehicle;
 }
 
 export interface CustomerVehicle {

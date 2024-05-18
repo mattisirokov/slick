@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { useGetStorageAssets } from "@/hooks/useGetStorageAssets";
 
-import useRealtime from "@/hooks/useRealtime";
+import { useRealtimeMessages } from "@/hooks/useRealtime";
 import { Conversation, UserProfile } from "@/types";
 
 interface ConversationItemProps {
@@ -22,7 +22,7 @@ export default function ConversationItem({
   const { replace } = useRouter();
   const { getUserProfileImage } = useGetStorageAssets();
 
-  useRealtime();
+  useRealtimeMessages();
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
