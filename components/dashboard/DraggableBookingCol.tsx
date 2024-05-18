@@ -15,7 +15,7 @@ export default function DraggableBookingCol({
 }: DraggableBookingColProps) {
   return (
     <div className={"flex h-full w-full flex-col items-center rounded-md"}>
-      <p className={"mb-4 mt-2"}>{heading}</p>
+      <p className={"mb-4 mt-2 text-xl font-semibold"}>{heading}</p>
       <Droppable droppableId={heading}>
         {(provided) => (
           <div

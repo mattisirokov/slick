@@ -5,7 +5,6 @@ import BrowseMap from "@/components/browse-map/BrowseMap";
 import PageLayout from "@/components/layouts/PageLayout";
 import BrowseSearch from "@/components/browse-page/BrowseSearch";
 
-import { RepairShop } from "@/types";
 import RepairShopList from "@/components/browse-page/RepairShopList";
 
 export const revalidate = 0;
