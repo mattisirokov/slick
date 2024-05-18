@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 
+import { useRealtimeBookings } from "@/hooks/useRealtime";
 import { updateBookingStatus } from "@/server/bookings/actions";
 
 import DraggableBookingCol from "./DraggableBookingCol";
@@ -15,6 +16,8 @@ interface DraggableBookingsTableProps {
 export default function DraggableBookingsTable({
   bookings,
 }: DraggableBookingsTableProps) {
+  useRealtimeBookings();
+
   const [columns, setColumns] = useState([
     {
       title: "Incoming",

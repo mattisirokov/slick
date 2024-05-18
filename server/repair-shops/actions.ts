@@ -1,7 +1,6 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 import { createClient } from "@/utils/supabase/client";
 import { RepairShop, ShopService } from "@/types";
@@ -58,12 +57,40 @@ export async function getShopsMonthlyEarnings(shopId: number) {
     return 0;
   }
 
-  const totalEarnings = bookings.reduce(
-    (acc, booking) => acc + booking.price,
-    0,
-  );
+  return bookings.reduce((acc, booking) => acc + booking.price, 0);
+}
 
-  return totalEarnings;
+// get shop previous month earnings
+
+export async function getPreviousMonthBookingsTotal(shopId: number) {
+  const supabase = await createClient();
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+
+  const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+  const previousYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+  const { data: bookings, error: bookingError } = await supabase
+    .from("Bookings")
+    .select("*, shop_service_id (price)")
+    .eq("shop_id", shopId)
+    .gte(
+      "booking_start_date",
+      new Date(previousYear, previousMonth, 1).toISOString(),
+    )
+    .lt(
+      "booking_start_date",
+      new Date(previousYear, previousMonth + 1, 1).toISOString(),
+    );
+
+  if (bookingError) {
+    console.error("Error fetching bookings:", bookingError);
+    return 0;
+  }
+
+  return bookings.reduce((acc, booking) => acc + booking.price, 0);
 }
 
 export async function saveChangesMadeToRepairShop(

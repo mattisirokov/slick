@@ -50,6 +50,8 @@ export async function calculateBookingRevenuesForPastYear(
   return bookingRevenue.reverse();
 }
 
+// get previous months bookings total
+
 export async function getCustomerBookingsWithDetails(
   userID: string | number,
 ): Promise<BookingWithDetails[]> {
