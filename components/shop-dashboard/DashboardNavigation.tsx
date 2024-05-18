@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { getUser } from "@/server/user-authentication/actions";
-import DashboardNavigationItem from "@/components/dashboard/DashboardNavigationItem";
+import DashboardNavigationItem from "@/components/shop-dashboard/DashboardNavigationItem";
 
 export default async function DashboardNavigation() {
   const user = await getUser();
@@ -14,7 +14,7 @@ export default async function DashboardNavigation() {
   const commonNavigationLinks = [
     {
       title: "Dashboard",
-      href: user.shop_owner ? "/shop-dashboard" : "/customer-dashboard",
+      href: user.shop_owner ? "/shop-dashboard" : "/customer-shop-dashboard",
     },
     {
       title: "Bookings",

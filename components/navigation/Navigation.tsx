@@ -1,7 +1,7 @@
 "use client";
 
+import React, { useState } from "react";
 import Link from "next/link";
-import { useState } from "react";
 
 import { Button, ButtonProps } from "../ui/button";
 import { ChevronDown, XIcon } from "lucide-react";

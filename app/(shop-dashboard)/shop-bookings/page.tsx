@@ -6,7 +6,7 @@ import {
   getRepairShopAssociatedWithUser,
 } from "@/server/user-authentication/actions";
 
-import DraggableBookingsTable from "@/components/dashboard/DraggableBookingsTable";
+import DraggableBookingsTable from "@/components/shop-dashboard/DraggableBookingsTable";
 
 export default async function Page() {
   const user = await getUser();

@@ -5,7 +5,7 @@ import { getCustomerBookingsWithDetails } from "@/server/bookings/actions";
 import { getUserProfileAvatar } from "@/server/user-profiles/actions";
 import { getUser } from "@/server/user-authentication/actions";
 
-import UploadUserAvatar from "@/components/dashboard/UploadUserAvatar";
+import UploadUserAvatar from "@/components/shop-dashboard/UploadUserAvatar";
 
 import { BookingWithDetails } from "@/types";
 

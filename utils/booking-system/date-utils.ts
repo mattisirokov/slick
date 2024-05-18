@@ -36,6 +36,19 @@ export interface TimeSlotsGroup {
   [date: string]: string[];
 }
 
+// format a timestamp to a time string, ie. Monday, 15.3.2024 12:00
+
+export function formatTimeStampToTimeFi(timestamp: string) {
+  const date = new Date(timestamp);
+  return date.toLocaleDateString("fi-FI", {
+    hour: "2-digit",
+    minute: "2-digit",
+    weekday: "long",
+    day: "numeric",
+    month: "2-digit",
+  });
+}
+
 // format a timsstamp to a date string, ie. Monday, 15th March 2024
 
 export function formatTimestampToDate(timestamp: string) {
@@ -79,7 +92,7 @@ export function upcomingShopWorkWeek(
     ? shop.days_closed.split(",")
     : [];
 
-  const openDays = days
+  return days
     .filter((day) => {
       const date = parseISO(day);
       const dayOfWeek = daysOfWeek[getDay(date)];
@@ -92,8 +105,6 @@ export function upcomingShopWorkWeek(
         closingTime: `${day}T${closingTime}`,
       };
     });
-
-  return openDays;
 }
 
 export default function calculateBookingEndDate(

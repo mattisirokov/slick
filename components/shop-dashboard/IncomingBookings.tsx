@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 
-import { formatTimestampToDate } from "@/utils/booking-system/date-utils";
+import { formatTimeStampToTimeFi } from "@/utils/booking-system/date-utils";
 import { BookingWithDetails } from "@/types";
 
 interface BookingsTableProps {
@@ -37,9 +37,12 @@ function Minimenu() {
 
 export default function IncomingBookings({ bookings }: BookingsTableProps) {
   const sortedBookingsByDate = [...bookings].sort((a, b) => {
+    const currentDate = new Date();
     return (
-      new Date(b.booking_start_date).getTime() -
-      new Date(a.booking_start_date).getTime()
+      Math.abs(
+        currentDate.getTime() - new Date(a.booking_start_date).getTime(),
+      ) -
+      Math.abs(currentDate.getTime() - new Date(b.booking_start_date).getTime())
     );
   });
 
@@ -70,7 +73,7 @@ export default function IncomingBookings({ bookings }: BookingsTableProps) {
           <p className={"font-bold"}>Price</p>
         </div>
       </div>
-      {sortedBookingsByDate.slice(0, 3).map((booking) => (
+      {sortedBookingsByDate.slice(0, 4).map((booking) => (
         <div
           key={booking.id}
           className={
@@ -89,7 +92,7 @@ export default function IncomingBookings({ bookings }: BookingsTableProps) {
               "text-md flex w-[20%] items-center justify-center border-b-2 p-2"
             }
           >
-            {formatTimestampToDate(booking.booking_start_date)}
+            {formatTimeStampToTimeFi(booking.booking_start_date)}
           </div>
           <div
             className={
@@ -119,11 +122,6 @@ export default function IncomingBookings({ bookings }: BookingsTableProps) {
           </div>
         </div>
       ))}
-      <div className={"flex w-full flex-row items-center justify-center"}>
-        <Link href={"/shop-bookings"}>
-          <Button variant={"ghost"}>Load more</Button>
-        </Link>
-      </div>
     </div>
   );
 }

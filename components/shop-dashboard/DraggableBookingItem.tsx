@@ -4,7 +4,7 @@ import { Draggable } from "@hello-pangea/dnd";
 
 import { formatTimeStampToTime } from "@/utils/booking-system/date-utils";
 import { BookingWithDetails } from "@/types";
-import { DraggableItemModal } from "@/components/dashboard/DraggableItemModal";
+import { DraggableItemModal } from "@/components/shop-dashboard/DraggableItemModal";
 
 interface DraggableBookingItemProps {
   booking: BookingWithDetails;
