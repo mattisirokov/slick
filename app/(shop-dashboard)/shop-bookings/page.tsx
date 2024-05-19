@@ -7,8 +7,14 @@ import {
 } from "@/server/user-authentication/actions";
 
 import DraggableBookingsTable from "@/components/shop-dashboard/DraggableBookingsTable";
+import BookingsTableVIewSwitch from "@/components/shop-dashboard/BookingsTableVIewSwitch";
+import { BookingsTable } from "@/components/shop-dashboard/BookingsTable";
 
-export default async function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: { view: string };
+}) {
   const user = await getUser();
 
   const repairShop = await getRepairShopAssociatedWithUser();
@@ -18,6 +24,8 @@ export default async function Page() {
     return redirect("/login");
   }
 
+  const displayDraggableTable = searchParams.view !== "normal";
+
   return (
     <div
       className={
@@ -26,9 +34,14 @@ export default async function Page() {
     >
       <div className={"flex w-full flex-row justify-between"}>
         <p className={"mb-6 animate-fadeInUp text-3xl  font-bold"}>Bookings</p>
+        <BookingsTableVIewSwitch />
       </div>
       <div className={"h-full w-full animate-fadeInUp "}>
-        <DraggableBookingsTable bookings={bookings} />
+        {displayDraggableTable ? (
+          <DraggableBookingsTable bookings={bookings} />
+        ) : (
+          <BookingsTable bookings={bookings} />
+        )}
       </div>
     </div>
   );

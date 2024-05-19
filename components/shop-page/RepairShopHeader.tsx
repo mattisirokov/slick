@@ -2,20 +2,30 @@ import React from "react";
 import Image from "next/image";
 
 import { getShopBannerImageUrl } from "@/server/repair-shops/actions";
+import { getUser } from "@/server/user-authentication/actions";
+import { allowUserToLeaveReview } from "@/server/customer-review/actions";
 
-import AddToFaveriotes from "../buttons/AddToFavorites";
+import AddToFavorites from "../buttons/AddToFavorites";
 
 interface RepairShopHeaderProps {
   shopID: number;
   shopName: string;
   shopCity: string;
+  leaveReviewModal: React.ReactNode;
 }
 export default async function RepairShopHeader({
   shopID,
   shopName,
   shopCity,
+  leaveReviewModal,
 }: RepairShopHeaderProps) {
   const imageSource = await getShopBannerImageUrl(shopID);
+  const user = await getUser();
+
+  const displayLeaveReviewModal = await allowUserToLeaveReview(
+    shopID,
+    user?.user_id,
+  );
 
   return (
     <div
@@ -35,13 +45,16 @@ export default async function RepairShopHeader({
           "absolute bottom-0 z-10 flex h-[20%] w-[95%] flex-row items-center justify-between"
         }
       >
-        <div className={"flex flex-col gap-2"}>
+        <div className={"flex flex-col justify-center gap-2"}>
           <p className={"text-white"}>
             {shopName} - {shopCity}
           </p>
           <h1 className={"text-5xl text-white"}>{shopName}</h1>
         </div>
-        <AddToFaveriotes shopID={shopID} />
+        <div className={"flex flex-row items-center justify-center gap-4"}>
+          {displayLeaveReviewModal && leaveReviewModal}
+          <AddToFavorites shopID={shopID} />
+        </div>
       </div>
 
       <div

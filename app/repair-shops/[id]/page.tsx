@@ -1,3 +1,4 @@
+import { getUser } from "@/server/user-authentication/actions";
 import { getShopById } from "@/server/repair-shops/actions";
 
 import PageLayout from "@/components/layouts/PageLayout";
@@ -6,6 +7,7 @@ import AboutShop from "@/components/shop-page/AboutShop";
 import ShopServices from "@/components/shop-page/ShopServices";
 import CustomerReviews from "@/components/shop-page/CustomerReviews";
 import RepairShopLocationMap from "@/components/shop-page/RepairShopLocationMap";
+import { LeaveReviewModal } from "@/components/shop-page/LeaveReviewModal";
 
 export const revalidate = 0;
 
@@ -15,6 +17,7 @@ export default async function RepairShopPage({
   params: { id: number };
 }) {
   const shop = await getShopById(params.id);
+  const user = await getUser();
 
   return (
     <PageLayout>
@@ -23,6 +26,9 @@ export default async function RepairShopPage({
           shopID={shop.id}
           shopName={shop.name}
           shopCity={shop.city}
+          leaveReviewModal={
+            <LeaveReviewModal shopID={shop.id} userID={user?.user_id} />
+          }
         />
         <AboutShop
           heading={"About us"}
@@ -39,6 +45,7 @@ export default async function RepairShopPage({
             "We offer a wide range of services, from oil changes to engine rebuilds, we have you covered"
           }
           repairShop={shop}
+          user={user}
         />
         <CustomerReviews
           heading={"Customer reviews"}

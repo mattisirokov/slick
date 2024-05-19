@@ -39,7 +39,7 @@ export default async function DashboardNavigation() {
     : customerNavigationLinks;
 
   return (
-    <div className="sticky top-0 flex h-screen min-w-[10%] flex-col items-center bg-white pb-12 pt-12">
+    <div className="sticky top-0 flex h-screen min-w-[10%] flex-col items-center border-r-2 bg-white pb-12 pt-12">
       <div className="flex h-full w-full flex-col items-start justify-between">
         <div className="flex w-full flex-col items-center justify-center gap-12">
           <Link href="/" className={"text-2xl font-bold"}>
