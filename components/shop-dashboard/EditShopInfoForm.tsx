@@ -111,16 +111,6 @@ export default async function EditShopInfoForm({
           Save changes
         </SubmitButton>
       </form>
-
-      <div className={"flex w-full flex-row gap-12"}>
-        <div className={"flex flex-col items-start"}>
-          <p className={"mb-2"}>Upload banner</p>
-          <UploadShopBanner
-            shopId={repairShop.id}
-            uploadedImage={bannerImage}
-          />
-        </div>
-      </div>
     </>
   );
 }

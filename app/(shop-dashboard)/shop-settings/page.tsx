@@ -10,6 +10,7 @@ import EditUserInfo from "@/components/shop-dashboard/EditUserInfo";
 import { getShopServices } from "@/server/shop-services/actions";
 import EditShopServices from "@/components/shop-dashboard/EditShopServices";
 import { AddNewServiceModal } from "@/components/shop-dashboard/AddNewServiceModal";
+import EditShopBanner from "@/components/shop-dashboard/EditShopBanner";
 
 export default async function ShopSettings() {
   const user = await getUser();
@@ -30,6 +31,10 @@ export default async function ShopSettings() {
       <div className={"mb-24 w-full"}>
         <p className={"mb-6 animate-fadeInUp text-xl"}>Shop settings</p>
         <EditShopInfoForm repairShop={repairShop} />
+        <EditShopBanner
+          shopID={repairShop.id}
+          bannerURL={repairShop.banner_img_url}
+        />
       </div>
       <div className={"w-full"}>
         <div className={"flex w-full flex-row justify-between"}>
