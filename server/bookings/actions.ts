@@ -20,7 +20,6 @@ export async function getBookingsForRepairShop(
     console.error("Error fetching bookings:", bookingsError);
     return [];
   }
-
   return bookings;
 }
 

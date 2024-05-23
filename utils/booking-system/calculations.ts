@@ -1,11 +1,9 @@
-// calculate the percentage change between previous months bookings and the current months bookings
-
 export function calculatePercentageChange(
   previousMonthBookings: number,
   currentMonthBookings: number,
 ): number {
-  return (
+  const percentageChange =
     ((currentMonthBookings - previousMonthBookings) / previousMonthBookings) *
-    100
-  );
+    100;
+  return Math.round(percentageChange);
 }

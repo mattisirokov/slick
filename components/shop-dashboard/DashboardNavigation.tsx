@@ -14,7 +14,7 @@ export default async function DashboardNavigation() {
   const commonNavigationLinks = [
     {
       title: "Dashboard",
-      href: user.shop_owner ? "/shop-dashboard" : "/customer-shop-dashboard",
+      href: user.shop_owner ? "/shop-dashboard" : "/customer-dashboard",
     },
     {
       title: "Bookings",
