@@ -18,7 +18,7 @@ export default async function LatestReviews({ shopID }: LatestReviewsProps) {
         <div
           key={review.id}
           className={
-            "mb-4 flex w-full flex-row items-center justify-between gap-12 rounded-md border-2 border-gray-300 p-2"
+            "mb-4 flex w-full flex-row items-center justify-between gap-12 rounded-md p-2"
           }
         >
           <div className={"flex flex-col"}>

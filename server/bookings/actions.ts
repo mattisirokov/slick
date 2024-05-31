@@ -13,14 +13,13 @@ export async function getBookingsForRepairShop(
   const supabase = await createClient();
   const { data: bookings, error: bookingsError } = await supabase
     .from("Bookings")
-    .select(`*, shop_service_id(*), user_id(*)`)
+    .select(`*, shop_service_id(*), user_id(*), vehicle_id(*)`)
     .eq("shop_id", shopID);
 
   if (bookingsError || !bookings) {
     console.error("Error fetching bookings:", bookingsError);
     return [];
   }
-
   return bookings;
 }
 
@@ -50,6 +49,8 @@ export async function calculateBookingRevenuesForPastYear(
   return bookingRevenue.reverse();
 }
 
+// get previous months bookings total
+
 export async function getCustomerBookingsWithDetails(
   userID: string | number,
 ): Promise<BookingWithDetails[]> {
@@ -78,7 +79,7 @@ export async function makeBooking(formData: FormData) {
 
   const supabase = await createClient();
 
-  const { data, error } = await supabase.from("Bookings").insert([
+  const { error } = await supabase.from("Bookings").insert([
     {
       shop_service_id: shopServiceID,
       user_id: userID,
@@ -96,4 +97,20 @@ export async function makeBooking(formData: FormData) {
   }
 
   return redirect("/booking-complete");
+}
+
+export async function updateBookingStatus(
+  bookingID: number,
+  newStatus: string,
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("Bookings")
+    .update({ status: newStatus })
+    .eq("id", bookingID);
+
+  if (error) {
+    console.error("Error updating booking status:", error);
+    throw new Error(error.message);
+  }
 }

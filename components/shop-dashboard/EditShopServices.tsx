@@ -15,12 +15,12 @@ export default function EditShopServices({
 }: EditShopServicesProps) {
   const handleServiceUpdate = async (formData: FormData) => {
     "use server";
-    updateShopService(formData);
+    await updateShopService(formData);
   };
 
   const handleServiceDelete = async (formData: FormData) => {
     "use server";
-    deleteShopService(formData);
+    await deleteShopService(formData);
   };
 
   return (

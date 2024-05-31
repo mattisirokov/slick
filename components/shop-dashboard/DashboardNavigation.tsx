@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { getUser } from "@/server/user-authentication/actions";
+import DashboardNavigationItem from "@/components/shop-dashboard/DashboardNavigationItem";
 
 export default async function DashboardNavigation() {
   const user = await getUser();
@@ -38,27 +39,25 @@ export default async function DashboardNavigation() {
     : customerNavigationLinks;
 
   return (
-    <div className="sticky top-0 flex h-screen flex-col items-center bg-white p-12">
+    <div className="sticky top-0 flex h-screen min-w-[10%] flex-col items-center border-r-2 bg-white pb-12 pt-12">
       <div className="flex h-full w-full flex-col items-start justify-between">
-        <div className="flex w-full flex-col items-start justify-center gap-12">
+        <div className="flex w-full flex-col items-center justify-center gap-12">
           <Link href="/" className={"text-2xl font-bold"}>
             Slick
           </Link>
           <div className="flex w-full flex-col items-start justify-center gap-8">
             {navigationLinks.map((link) => (
-              <Link href={link.href} key={link.title}>
-                {link.title}
-              </Link>
+              <DashboardNavigationItem
+                key={link.title}
+                title={link.title}
+                href={link.href}
+              />
             ))}
           </div>
         </div>
         <div className="flex w-full flex-col items-start justify-center gap-4">
-          <Link
-            href={user.shop_owner ? "/shop-settings" : "/customer-settings"}
-          >
-            Settings
-          </Link>
-          <Link href="/">Home</Link>
+          <DashboardNavigationItem title={"settings"} href={"/shop-settings"} />
+          <DashboardNavigationItem title={"logout"} href={"/logout"} />
         </div>
       </div>
     </div>

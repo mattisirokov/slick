@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/client";
 
 export async function addRepairShopToFavorites(
@@ -16,6 +17,7 @@ export async function addRepairShopToFavorites(
     return null;
   }
 
+  revalidatePath(`/repair-shops/${shopID}`);
   return data;
 }
 
@@ -37,6 +39,7 @@ export async function removeRepairShopFromFavorites(
     return null;
   }
 
+  revalidatePath(`/repair-shops/${shopID}`);
   return data;
 }
 

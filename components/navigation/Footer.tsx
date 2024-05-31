@@ -32,7 +32,7 @@ export default function Footer(props: Footer4Props) {
     ...props,
   } as Props;
   return (
-    <footer className="md:py-18 border-grey-100 border-t-2 px-[5%] py-12 lg:py-20">
+    <footer className="md:py-18 px-[5%] py-12 lg:py-20">
       <div className="container">
         <div className="md:pb-18 grid grid-cols-1 items-center justify-center justify-items-center gap-x-[4vw] gap-y-12 pb-12 lg:grid-cols-[0.25fr_1fr_0.25fr] lg:justify-between lg:gap-y-4 lg:pb-20">
           <div className="lg:justify-self-start">

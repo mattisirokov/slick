@@ -14,9 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { updateVehicle } from "@/server/customer-vehicles/actions";
 import { SubmitButton } from "../buttons/SubmitButton";
-import { CustomerVehicle } from "@/types";
+
 import { vehicleFields } from "@/utils/vehicleFormFields";
 
 const FormSchema = z.object({
@@ -37,37 +36,34 @@ const FormSchema = z.object({
 
 export type FormDataType = z.infer<typeof FormSchema>;
 
-type UpdateVehicleFormProps = {
-  vehicle: CustomerVehicle;
+type LeaveReviewFormProps = {
+  customerId: string | undefined;
+  shopId: number;
   onSuccess: () => void;
 };
 
-export default function UpdateVehicleForm({
-  vehicle,
+export default function LeaveReviewForm({
+  customerId,
+  shopId,
   onSuccess,
-}: UpdateVehicleFormProps) {
+}: LeaveReviewFormProps) {
   const form = useForm<FormDataType>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      make: `${vehicle.make}`,
-      model: `${vehicle.model}`,
-      yearManufactured: `${vehicle.year_manufactured}`,
-      registrationNumber: `${vehicle.registration_number}`,
-      description: `${vehicle.description}`,
+      make: "",
+      model: "",
+      yearManufactured: "",
+      registrationNumber: "",
+      description: "",
     },
   });
 
-  const handleUpdateVehicle = async (formData: FormDataType) => {
-    const response = await updateVehicle(formData, vehicle.id);
-    if (response) {
-      onSuccess();
-    }
-  };
+  const handleAddNewVehicle = async (formData: FormDataType) => {};
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(handleUpdateVehicle)}
+        onSubmit={form.handleSubmit(handleAddNewVehicle)}
         className="space-y-6"
       >
         {vehicleFields.map((vehicle) => (
@@ -95,10 +91,10 @@ export default function UpdateVehicleForm({
         ))}
         <SubmitButton
           type="submit"
-          pendingText="Updating..."
+          pendingText="Adding..."
           className="mb-2 h-10 rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90"
         >
-          Update vehicle
+          Add vehicle
         </SubmitButton>
       </form>
     </Form>

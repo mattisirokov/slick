@@ -1,3 +1,4 @@
+import React from "react";
 import { redirect } from "next/navigation";
 
 import { getCustomerVehicles } from "@/server/customer-vehicles/actions";
@@ -17,16 +18,10 @@ export default async function CustomerVehicles() {
   const customerVehicles = await getCustomerVehicles(user.user_id);
 
   return (
-    <div
-      className={
-        "flex h-full min-h-screen w-full flex-col items-start justify-start bg-slate-100 p-12"
-      }
-    >
+    <div className={"w-full rounded-md bg-white p-6"}>
       <div className={"flex w-full flex-row items-start justify-between"}>
-        <p className={"mb-6 animate-fadeInUp text-3xl font-bold"}>Vehicles</p>
-        <AddNewVehicleModal
-          children={<AddNewVehicleForm customerId={user.user_id} />}
-        />
+        <p className={"mb-6 text-3xl font-bold"}>Vehicles</p>
+        <AddNewVehicleModal customerId={user.user_id} />
       </div>
       <VehiclesTable vehicles={customerVehicles} />
     </div>

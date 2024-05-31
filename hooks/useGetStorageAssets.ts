@@ -1,5 +1,8 @@
 export const useGetStorageAssets = () => {
-  const getSpecificWebsiteAsset = (folder: string, assetName: string) => {
+  const getSpecificWebsiteAsset = (
+    folder: "Home" | "Browse",
+    assetName: string,
+  ) => {
     return `${process.env.NEXT_PUBLIC_SUPABASE_BUCKET_URL}/Website%20Assets/${folder}/${assetName}`;
   };
 
@@ -9,8 +12,19 @@ export const useGetStorageAssets = () => {
     }
     return `${process.env.NEXT_PUBLIC_SUPABASE_BUCKET_URL}/User%20Avatars/${avatarURL}`;
   };
+
+  const getRepairShopBanner = (
+    bannerURL: string | undefined,
+  ): string | null => {
+    if (!bannerURL) {
+      return null;
+    }
+
+    return `${process.env.NEXT_PUBLIC_SUPABASE_BUCKET_URL}/Shop%20Banners/${bannerURL}`;
+  };
   return {
     getSpecificWebsiteAsset,
     getUserProfileImage,
+    getRepairShopBanner,
   };
 };

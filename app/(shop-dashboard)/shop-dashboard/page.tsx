@@ -6,15 +6,15 @@ import { getRepairShopAssociatedWithUser } from "@/server/user-authentication/ac
 import { calculateBookingRevenuesForPastYear } from "@/server/bookings/actions";
 import { getUser } from "@/server/user-authentication/actions";
 
-import DashboardUserBar from "@/components/dashboard/DashboardUserBar";
-import IncomingBookings from "@/components/dashboard/BookingsTable";
-import CurrentMonthEarnings from "@/components/dashboard/CurrentMonthEarnings";
-import LatestReviews from "@/components/dashboard/LatestReviews";
-import ShopPerformance from "@/components/dashboard/ShopPerformance";
-import OpenSlots from "@/components/dashboard/OpenSlots";
+import DashboardUserBar from "@/components/shop-dashboard/DashboardUserBar";
+import IncomingBookings from "@/components/shop-dashboard/IncomingBookings";
+import CurrentMonthEarnings from "@/components/shop-dashboard/CurrentMonthEarnings";
+import LatestReviews from "@/components/shop-dashboard/LatestReviews";
+import ShopPerformance from "@/components/shop-dashboard/ShopPerformance";
+import OpenSlots from "@/components/shop-dashboard/OpenSlots";
 
 const EarningsOverTimeChart = dynamic(
-  () => import("@/components/dashboard/EarningsOverTimeChart"),
+  () => import("@/components/shop-dashboard/EarningsOverTimeChart"),
   { ssr: false },
 );
 
